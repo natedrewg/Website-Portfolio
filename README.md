@@ -1,38 +1,14 @@
-# Website-Portfolio
+# Nathan Gilbert, portfolio
 
-This Website Portfolio was created with HTML, CSS, and JavaScript.
-Started in September, the first edition was finished on November 24th. 
+Live at https://natedrewg.github.io/Website-Portfolio/
 
-Features such as:
-A navigation bar with href links to other ID's within the page.
-JavaScript to provide dropdown descriptions for the classes section.
-Links to every profile of my professional life.
+A single static page (`index.html`) with images in `assets/`. No build step: GitHub Pages serves it as is.
 
-Contains:
-Navigation Bar,
-Majors,
-Phone Number,
-Email,
-Linked in Profile,
-Github Profile,
-Honors,
-Relevant Experience,
-Projects,
-Classes,
-Work Experience,
-References,
-Activities,
-Interests,
-Pictures
+What's on it:
 
-Upgrades to be made:
-Add link to Resume
-Projects - Codegrade |
-Work Experience - Ta over winter break, with CodeGrade |
-Relevant Experience - Add a space for how well I know each subject... most likely with a meter of some kind |
-Navigation Bar - Make it auto sized to fit perfectly on the page |
-Projects - Add write ups |
-Projects - Add connection to Database on webpage |
-Customize Appearance - Add light Mode and Dark Mode button on the top lefthand side |
-Customize Appearance - Add different Languages mode 
-Customize Appearance - Add different Languages mode
+- AI engineering work at Thermo Fisher Scientific, including a click-through walkthrough of how the HR analytics agent answers a question
+- Mendly, a daily check-in app for therapy clients (web, iPhone and Android)
+- Fins of Fate, a co-op roguelike from Mofghoul Studios
+- Earlier roles, skills and education
+
+Fonts come from Google Fonts (Bricolage Grotesque, Source Serif 4, JetBrains Mono). Everything else is in the one HTML file.

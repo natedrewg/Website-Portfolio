@@ -1,564 +1,1010 @@
-<!DOCTYPE html>
+<!doctype html>
 <html lang="en">
-  <head>
-    <meta name="viewport" charset="UTF-8" content="width=device-width, initial-scale=1" />
-    <title>Nathan's Website Portfolio</title>
-    <link
-      rel="stylesheet"
-      href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css"
-    />
-    <style>
-      body {
-        margin-left: 11%;
-        margin-right: 11%;
-        background-color: #d0d0d0;
-        padding: 12px 20px;
-        font-size:calc(6.5px + .77vw);
-      }
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+  <title>Nathan Gilbert, AI engineer</title>
+  <meta name="description" content="Nathan Gilbert builds production AI systems at Thermo Fisher Scientific, runs Mendly, a daily check-in app for therapy clients, and co-founded Mofghoul Studios, maker of Fins of Fate.">
+  <meta property="og:title" content="Nathan Gilbert, AI engineer">
+  <meta property="og:description" content="AI engineer at Thermo Fisher Scientific. Founder of Mendly. CEO and co-founder of Mofghoul Studios.">
+  <meta property="og:type" content="website">
+  <meta property="og:url" content="https://natedrewg.github.io/Website-Portfolio/">
+  <meta property="og:image" content="https://natedrewg.github.io/Website-Portfolio/assets/social.jpg">
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="theme-color" content="#F3F9FB">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wdth,wght@12..96,75..100,400..800&family=JetBrains+Mono:wght@400;600&family=Source+Serif+4:ital,opsz,wght@0,8..60,400;0,8..60,600;1,8..60,400&display=swap" rel="stylesheet">
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "Person",
+    "name": "Nathan Gilbert",
+    "jobTitle": "AI Engineer",
+    "worksFor": {"@type": "Organization", "name": "Thermo Fisher Scientific"},
+    "alumniOf": {"@type": "CollegeOrUniversity", "name": "Eastern University"},
+    "address": {"@type": "PostalAddress", "addressLocality": "West Chester", "addressRegion": "PA"},
+    "email": "mailto:natedrewg@gmail.com",
+    "url": "https://natedrewg.github.io/Website-Portfolio/",
+    "sameAs": ["https://www.linkedin.com/in/nathan-gilbert44", "https://github.com/natedrewg", "https://mendly.me", "https://mofghoul.com"]
+  }
+  </script>
+  <style>
+    /* Layout concept: one long dive. The page starts at the sunlit surface and gets
+       deeper section by section, ending on the sea floor. A depth gauge tracks it. */
+    :root {
+      --surface: #F3F9FB;
+      --sunlit: #DCEDF3;
+      --shelf: #B7D5E2;
+      --twilight: #123A54;
+      --midnight: #0A1D2E;
+      --abyss: #06121D;
+      --floor: #03090F;
+      --buoy: #F2A23C;
+      --glow: #7FE3EA;
+      --display: "Bricolage Grotesque", "Avenir Next Condensed", "Arial Narrow", sans-serif;
+      --body: "Source Serif 4", Georgia, "Times New Roman", serif;
+      --code: "JetBrains Mono", ui-monospace, "SFMono-Regular", Menlo, Consolas, monospace;
+      --gutter: max(20px, env(safe-area-inset-left, 0px));
+      --gutter-r: max(20px, env(safe-area-inset-right, 0px));
+      color-scheme: light;
+    }
+    .zone-light {
+      --ink: #0D2131; --soft: #3A5163; --link: #075A6E; --rule: rgba(13, 33, 49, .14);
+      --panel: rgba(255, 255, 255, .62); --panel-edge: rgba(13, 33, 49, .08); --chip: rgba(7, 90, 110, .08);
+      color: var(--ink);
+    }
+    .zone-dark {
+      --ink: #E7F1F5; --soft: #A6BCCA; --link: var(--glow); --rule: rgba(167, 205, 222, .16);
+      --panel: rgba(255, 255, 255, .045); --panel-edge: rgba(167, 205, 222, .14); --chip: rgba(127, 227, 234, .1);
+      color: var(--ink);
+    }
 
-      img {
-        border: 8px groove #222;
-        border-radius: 5px;
-      }
+    *, *::before, *::after { box-sizing: border-box; }
+    html { scroll-behavior: smooth; }
+    body {
+      margin: 0; background: var(--floor); color: #0D2131;
+      font-family: var(--body); font-size: 1.125rem; line-height: 1.66;
+      -webkit-font-smoothing: antialiased; text-rendering: optimizeLegibility;
+    }
+    img { max-width: 100%; height: auto; display: block; }
+    a { color: var(--link); text-decoration-thickness: 1px; text-underline-offset: 3px; }
+    a:hover { text-decoration-thickness: 2px; }
+    :focus-visible { outline: 3px solid var(--buoy); outline-offset: 3px; border-radius: 4px; }
+    h1, h2, h3 { font-family: var(--display); text-wrap: balance; margin: 0; }
+    p { margin: 0; }
+    .skip { position: absolute; left: -9999px; top: 0; z-index: 30; background: #0D2131; color: #fff; padding: .6rem 1rem; }
+    .skip:focus { left: 1rem; top: 1rem; }
+    .wrap { max-width: 72rem; margin: 0 auto; padding-left: var(--gutter); padding-right: var(--gutter-r); }
+    .zone { position: relative; }
 
-      
-      .main {
-        margin-left: 30px;
-        margin-right: 30px;
-      }
+    /* Shared bits */
+    .btn {
+      display: inline-flex; align-items: center; gap: .55rem; font-family: var(--display); font-weight: 600;
+      font-size: 1rem; line-height: 1; padding: .85rem 1.25rem; border-radius: 999px; text-decoration: none;
+      border: 1.5px solid currentColor; color: var(--ink); transition: transform .2s ease, background-color .2s ease, color .2s ease;
+    }
+    .btn:hover { transform: translateY(-2px); }
+    .btn.solid { background: var(--ink); color: var(--surface); border-color: var(--ink); }
+    .zone-dark .btn.solid { color: var(--midnight); }
+    .btn svg { width: 1.05em; height: 1.05em; flex: none; }
+    .stack { font-family: var(--display); font-size: .9375rem; line-height: 1.5; color: var(--soft); }
+    .meta { font-family: var(--display); font-size: 1rem; line-height: 1.5; color: var(--soft); }
+    .meta strong { color: var(--ink); font-weight: 600; }
+    .sect-title { font-weight: 800; font-size: clamp(2.6rem, 6.4vw, 5.25rem); line-height: .95; letter-spacing: -.03em; font-variation-settings: "wdth" 88; }
+    .lead { font-size: clamp(1.1875rem, 1.6vw, 1.375rem); line-height: 1.6; max-width: 40rem; }
+    .sect { padding-block: 7rem 4rem; }
+    .sect-top { display: grid; gap: 1.75rem; margin-bottom: 3.5rem; }
+    @media (min-width: 62rem) { .sect-top { grid-template-columns: minmax(0, 1fr) minmax(0, 1.25fr); align-items: end; gap: 4rem; } }
+    .sect-top .meta { margin-top: 1.1rem; }
 
-      h2 {
-        text-align: center;
-        border-top: 5px solid rgb(0, 0, 0);
-      }
+    .grid { display: grid; gap: 2.25rem 2.5rem; }
+    @media (min-width: 46rem) { .grid.two { grid-template-columns: repeat(2, minmax(0, 1fr)); } .grid.three { grid-template-columns: repeat(2, minmax(0, 1fr)); } }
+    @media (min-width: 66rem) { .grid.three { grid-template-columns: repeat(3, minmax(0, 1fr)); } }
+    .item { border-top: 1px solid var(--rule); padding-top: 1.25rem; min-width: 0; }
+    .item h3 { font-weight: 700; font-size: 1.3125rem; line-height: 1.25; letter-spacing: -.01em; margin-bottom: .55rem; }
+    .item p { color: var(--ink); }
+    .item .stack { margin-top: .7rem; }
 
-      p {
-        text-align: center;
-      }
+    /* Reveal on scroll: content is visible by default and only animates when scripting is on */
+    .js [data-reveal] { opacity: 0; transform: translateY(22px); transition: opacity .8s ease, transform .8s cubic-bezier(.2,.7,.2,1); }
+    .js [data-reveal].in { opacity: 1; transform: none; }
 
-      html {
-        scroll-behavior: smooth;
-        scroll-padding-top: 60px;
-        background-color: #959595;
+    /* ---------- Surface ---------- */
+    .hero { background: linear-gradient(180deg, var(--surface) 0%, var(--sunlit) 100%); overflow: hidden; }
+    #caustics { position: absolute; inset: 0; width: 100%; height: 100%; opacity: .55; pointer-events: none; mix-blend-mode: soft-light; }
+    .hero::after { content: ""; position: absolute; inset: auto 0 0; height: 40%; background: linear-gradient(180deg, transparent, var(--sunlit)); pointer-events: none; }
+    .hero .wrap { position: relative; z-index: 1; padding-block: max(4.5rem, env(safe-area-inset-top, 0px)) 5rem; }
+    .hero-grid { display: grid; gap: 2.5rem; align-items: center; }
+    @media (min-width: 58rem) { .hero-grid { grid-template-columns: minmax(0, 1fr) 20rem; gap: 4rem; } }
+    .name {
+      font-weight: 800; font-size: clamp(3.6rem, 11vw, 9rem); line-height: .88; letter-spacing: -.035em;
+      font-variation-settings: "wdth" 84; margin-left: -.04em;
+    }
+    .name .line { display: block; overflow: hidden; padding-bottom: .06em; }
+    .name .line span { display: inline-block; animation: rise 1.1s cubic-bezier(.2,.75,.15,1) both; }
+    .name .line:nth-child(2) span { animation-delay: .12s; }
+    @keyframes rise { from { transform: translateY(105%); } to { transform: none; } }
+    .thesis { font-family: var(--display); font-weight: 600; font-size: clamp(1.375rem, 2.4vw, 1.875rem); line-height: 1.2; letter-spacing: -.015em; margin: 1.75rem 0 1.25rem; max-width: 30ch; animation: fade 1s .45s ease both; }
+    .hero .intro { color: var(--soft); max-width: 36rem; animation: fade 1s .6s ease both; }
+    .actions { display: flex; flex-wrap: wrap; gap: .75rem; margin-top: 2rem; animation: fade 1s .75s ease both; }
+    @keyframes fade { from { opacity: 0; transform: translateY(10px); } to { opacity: 1; transform: none; } }
+    .portrait-wrap { position: relative; justify-self: start; width: min(20rem, 72vw); animation: fade 1.2s .3s ease both; }
+    @media (min-width: 58rem) { .portrait-wrap { justify-self: end; } }
+    .portrait { width: 100%; border-radius: 2rem 2rem 11rem 2rem; box-shadow: 0 30px 60px -30px rgba(13, 33, 49, .45); }
+    .frame { position: relative; z-index: 0; }
+    .frame::before { content: ""; position: absolute; inset: -14px -14px 14px 14px; border: 1.5px solid rgba(7, 90, 110, .28); border-radius: 2rem 2rem 11rem 2rem; z-index: -1; pointer-events: none; }
+    .place { display: flex; align-items: center; gap: .4rem; margin-top: 1.5rem; font-family: var(--display); font-size: .9375rem; color: var(--soft); }
+    .place svg { width: 1rem; height: 1rem; }
 
-      }
+    .building { margin-top: 5rem; }
+    .building h2 { font-weight: 700; font-size: 1.125rem; color: var(--soft); margin-bottom: 1.25rem; letter-spacing: -.005em; }
+    .cards { display: grid; gap: 1.25rem; }
+    @media (min-width: 52rem) { .cards { grid-template-columns: repeat(3, minmax(0, 1fr)); } }
+    .card {
+      position: relative; display: flex; flex-direction: column; min-height: 22rem; border-radius: 1.5rem; overflow: hidden;
+      text-decoration: none; color: #fff; isolation: isolate;
+      box-shadow: 0 24px 48px -28px rgba(10, 29, 46, .55); transition: transform .35s cubic-bezier(.2,.7,.2,1), box-shadow .35s ease;
+    }
+    .card:hover { transform: translateY(-6px); box-shadow: 0 36px 60px -30px rgba(10, 29, 46, .7); }
+    .card .art { position: absolute; inset: 0; z-index: -1; transition: transform .8s cubic-bezier(.2,.7,.2,1); }
+    .card:hover .art { transform: scale(1.04); }
+    .card .txt { margin-top: auto; padding: 4.5rem 1.5rem 1.5rem; background: linear-gradient(180deg, transparent, rgba(4, 14, 24, .88) 50%); }
+    .card .role { font-family: var(--display); font-size: .9375rem; color: rgba(255,255,255,.78); }
+    .card h3 { font-weight: 800; font-size: 1.75rem; letter-spacing: -.025em; line-height: 1.05; margin: .25rem 0 .45rem; }
+    .card p { font-size: 1rem; line-height: 1.5; color: rgba(255,255,255,.86); }
+    .card-tf .art { background: radial-gradient(120% 90% at 20% 10%, #1D6A86 0%, #0D3550 55%, #08243A 100%); }
+    .card-tf .mini { position: absolute; inset: 1.5rem 1.5rem auto; display: grid; gap: .55rem; font-family: var(--code); font-size: .8125rem; line-height: 1.45; }
+    .mini .q { background: rgba(255,255,255,.12); border: 1px solid rgba(255,255,255,.18); border-radius: .9rem .9rem .9rem .25rem; padding: .6rem .8rem; font-family: var(--body); font-size: .9375rem; color: #fff; }
+    .mini .plan { background: rgba(3, 12, 20, .55); border: 1px solid rgba(127, 227, 234, .22); border-radius: .75rem; padding: .7rem .8rem; color: #BFEFF3; white-space: pre; overflow: hidden; }
+    .mini .plan b { color: var(--buoy); font-weight: 600; }
+    .card-me .art { background: #4F46E5 url("assets/mendly-insights.webp") center 62% / 78% auto no-repeat; }
+    .card-fof .art { background: #0A1D2E url("assets/fins/coop-3.webp") center / cover no-repeat; }
 
-      a {
-        color:#084256;
-      }
+    /* ---------- Thermo Fisher (sunlit) ---------- */
+    .thermo { background: linear-gradient(180deg, var(--sunlit) 0%, var(--shelf) 100%); }
+    .agent {
+      border-radius: 1.75rem; background: var(--panel); border: 1px solid var(--panel-edge);
+      -webkit-backdrop-filter: blur(10px); backdrop-filter: blur(10px);
+      box-shadow: 0 40px 80px -50px rgba(13, 33, 49, .55); overflow: hidden; margin-bottom: 4.5rem;
+    }
+    .agent-head { display: flex; flex-wrap: wrap; align-items: center; justify-content: space-between; gap: 1rem; padding: 1.5rem 1.75rem 0; }
+    .agent-head h3 { font-weight: 700; font-size: 1.375rem; letter-spacing: -.01em; }
+    .agent-head .ctl { display: flex; gap: .5rem; }
+    .chip-btn { font-family: var(--display); font-weight: 600; font-size: .9375rem; border-radius: 999px; padding: .5rem .95rem; border: 1px solid var(--rule); background: transparent; color: var(--ink); cursor: pointer; }
+    .chip-btn:hover { background: var(--chip); }
+    .agent-body { display: grid; gap: 0; grid-template-columns: minmax(0, 1fr); }
+    .stage, .panes, .pane { min-width: 0; }
+    @media (min-width: 58rem) { .agent-body { grid-template-columns: 15rem minmax(0, 1fr); } }
+    .steps { list-style: none; margin: 0; padding: 1.25rem 1.25rem 1.25rem 1.75rem; display: flex; gap: .35rem; overflow-x: auto; }
+    @media (min-width: 58rem) { .steps { flex-direction: column; padding-block: 1.75rem; } }
+    .steps button {
+      width: 100%; display: flex; align-items: center; gap: .75rem; text-align: left; cursor: pointer; white-space: nowrap;
+      font-family: var(--display); font-size: 1rem; font-weight: 600; color: var(--soft); background: transparent; border: 0; border-radius: .8rem; padding: .6rem .75rem;
+    }
+    .steps button .n {
+      flex: none; width: 1.75rem; height: 1.75rem; border-radius: 50%; display: grid; place-items: center; font-size: .8125rem;
+      border: 1.5px solid var(--rule); font-variant-numeric: tabular-nums; transition: background-color .3s, color .3s, border-color .3s;
+    }
+    .steps button[aria-current="step"] { color: var(--ink); background: rgba(255,255,255,.75); }
+    .steps button[aria-current="step"] .n { background: var(--ink); border-color: var(--ink); color: #fff; }
+    .steps button.done .n { background: var(--buoy); border-color: var(--buoy); color: #1B1205; }
+    .stage { position: relative; min-height: 23rem; padding: 1.75rem; border-top: 1px solid var(--panel-edge); }
+    @media (min-width: 58rem) { .stage { border-top: 0; border-left: 1px solid var(--panel-edge); padding: 2.25rem 2.5rem; } }
+    .pane { display: none; }
+    .pane.on { display: block; animation: paneIn .5s cubic-bezier(.2,.7,.2,1) both; }
+    @keyframes paneIn { from { opacity: 0; transform: translateY(8px); } to { opacity: 1; transform: none; } }
+    .pane h4 { font-family: var(--display); font-weight: 700; font-size: 1.0625rem; margin: 0 0 1rem; color: var(--soft); }
+    .bubble { max-width: 34rem; padding: 1rem 1.2rem; border-radius: 1.25rem; font-size: 1.1875rem; line-height: 1.45; }
+    .bubble.user { background: #0D2131; color: #F3F9FB; border-bottom-right-radius: .35rem; margin-left: auto; }
+    .bubble.agent-b { background: #fff; border: 1px solid var(--panel-edge); border-bottom-left-radius: .35rem; }
+    .who { font-family: var(--display); font-size: .875rem; color: var(--soft); margin: 0 0 .4rem; }
+    .who.r { text-align: right; }
+    .explain { margin-top: 1.25rem; color: var(--soft); font-size: 1.0625rem; max-width: 36rem; }
+    .tokens { font-size: 1.375rem; line-height: 2.1; }
+    mark { background: none; color: inherit; border-bottom: 3px solid; padding: 0 .1em; }
+    mark.ok { border-color: #2E9E8F; }
+    mark.amb { border-color: var(--buoy); background: rgba(242, 162, 60, .16); }
+    .resolve { list-style: none; padding: 0; margin: 1.25rem 0 0; display: grid; gap: .6rem; }
+    .resolve li { display: flex; flex-wrap: wrap; gap: .25rem .75rem; align-items: baseline; font-size: 1.0625rem; }
+    .resolve .t { font-family: var(--display); font-weight: 700; min-width: 7.5rem; }
+    .tag { font-family: var(--display); font-size: .8125rem; font-weight: 600; padding: .15rem .55rem; border-radius: 999px; }
+    .tag.ok { background: rgba(46, 158, 143, .14); color: #1C6E63; }
+    .tag.amb { background: rgba(242, 162, 60, .2); color: #8A5208; }
+    .options { display: flex; flex-wrap: wrap; gap: .5rem; margin-top: 1rem; }
+    .opt { font-family: var(--display); font-size: 1rem; font-weight: 600; border-radius: 999px; padding: .55rem 1rem; border: 1.5px solid var(--rule); background: #fff; color: var(--ink); cursor: pointer; transition: all .25s ease; }
+    .opt[aria-pressed="true"] { background: #0D2131; border-color: #0D2131; color: #fff; }
+    pre.code {
+      margin: 0; font-family: var(--code); font-size: .9rem; line-height: 1.6; color: #CFEFF2; background: #0B2235; border-radius: 1rem;
+      padding: 1.1rem 1.25rem; overflow-x: auto; box-shadow: inset 0 0 0 1px rgba(127, 227, 234, .12);
+    }
+    @media (max-width: 30rem) { pre.code { font-size: .74rem; padding: .9rem 1rem; } .stage { padding: 1.25rem; } }
+    pre.code .k { color: #7FE3EA; } pre.code .s { color: #F6C67A; } pre.code .c { color: #6E8BA0; } pre.code .f { color: #B9A7FF; }
+    .checks { list-style: none; padding: 0; margin: 0; display: grid; gap: .8rem; }
+    .checks li { display: flex; gap: .8rem; align-items: flex-start; font-size: 1.0625rem; }
+    .checks svg { flex: none; width: 1.5rem; height: 1.5rem; margin-top: .1rem; }
+    .answer { margin-top: 1.5rem; padding: 1rem 1.2rem; border-radius: 1rem; background: rgba(46, 158, 143, .1); border: 1px solid rgba(46, 158, 143, .3); font-size: 1.0625rem; }
+    .agent-sub { font-family: var(--display); font-size: .9375rem; color: var(--soft); margin-top: .2rem; }
+    .stage { display: flex; flex-direction: column; }
+    .panes { flex: 1; }
+    .stage-nav { display: flex; align-items: center; justify-content: space-between; gap: .75rem; margin-top: 2rem; padding-top: 1.25rem; border-top: 1px solid var(--panel-edge); }
+    .nav-btn {
+      display: inline-flex; align-items: center; gap: .4rem; font-family: var(--display); font-weight: 600; font-size: 1rem; line-height: 1;
+      padding: .75rem 1.1rem; border-radius: 999px; border: 1.5px solid var(--rule); background: #fff; color: var(--ink); cursor: pointer;
+      transition: transform .2s ease, opacity .2s ease;
+    }
+    .nav-btn svg { width: 1.1rem; height: 1.1rem; flex: none; }
+    .nav-btn:hover:not(:disabled) { transform: translateY(-1px); }
+    .nav-btn:disabled { opacity: .35; cursor: default; }
+    .nav-btn.solid { background: #0D2131; border-color: #0D2131; color: #fff; }
+    .count { font-family: var(--display); font-size: .9375rem; color: var(--soft); font-variant-numeric: tabular-nums; }
+    @media (max-width: 30rem) { .count { display: none; } }
+    .steps button { transition: background-color .25s ease, color .25s ease; }
+    .steps button:hover { color: var(--ink); background: rgba(255,255,255,.5); }
+    .agent-foot { padding: 1rem 1.75rem 1.4rem; border-top: 1px solid var(--panel-edge); font-family: var(--display); font-size: .875rem; color: var(--soft); }
 
-      .collapsible {
-        background-color: #555;
-        color: white;
-        cursor: pointer;
-        padding: 18px;
-        width: 100%;
-        border: none;
-        text-align: left;
-        outline: none;
-        font-size: calc(6.5px + 1vw);
-      }
+    /* ---------- Descent ---------- */
+    .descent { height: 9rem; background: linear-gradient(180deg, var(--shelf) 0%, #5E8EA6 35%, #23506C 70%, var(--twilight) 100%); }
 
-      .active,
-      .collapsible:hover {
-        background-color: #777;
-      }
+    /* ---------- Mendly (twilight) ---------- */
+    .mendly { background: linear-gradient(180deg, var(--twilight) 0%, #0E2E46 100%); overflow: hidden; }
+    .mendly::before { content: ""; position: absolute; width: 60rem; height: 60rem; right: -20rem; top: 10rem; background: radial-gradient(closest-side, rgba(99, 91, 255, .28), transparent); pointer-events: none; }
+    .mendly .wrap { position: relative; }
+    .phones { position: relative; display: flex; justify-content: center; align-items: flex-end; gap: 0; margin: 1rem 0 4.5rem; padding-top: 1rem; }
+    .phones figure { margin: 0; width: min(17rem, 30%); transition: transform .6s cubic-bezier(.2,.7,.2,1); }
+    .phones img { border-radius: 1.4rem; box-shadow: 0 40px 70px -30px rgba(0, 0, 0, .7), 0 0 0 1px rgba(255,255,255,.08); }
+    .phones figure:nth-child(1) { transform: translateX(14%) rotate(-7deg) translateY(6%); }
+    .phones figure:nth-child(2) { position: relative; z-index: 2; transform: translateY(-4%); }
+    .phones figure:nth-child(3) { transform: translateX(-14%) rotate(7deg) translateY(6%); }
+    .phones:hover figure:nth-child(1) { transform: translateX(0) rotate(-4deg) translateY(4%); }
+    .phones:hover figure:nth-child(3) { transform: translateX(0) rotate(4deg) translateY(4%); }
+    .stores { display: flex; flex-wrap: wrap; gap: .75rem; margin-top: 1.75rem; }
 
-      .content {
-        padding: 0 18px;
-        display: none;
-        overflow: hidden;
-        background-color: #f1f1f1;
-      }
-      nav {
-        margin-left: 11%;
-        margin-right: 11%;
-      }
+    .rates { display: grid; gap: 2rem; align-items: center; padding: 2rem; border-radius: 1.5rem; background: var(--panel); border: 1px solid var(--panel-edge); margin-bottom: 4rem; }
+    @media (min-width: 58rem) { .rates { grid-template-columns: minmax(0, 1fr) minmax(0, 1.2fr); padding: 2.5rem 3rem; } }
+    .rates h3 { font-weight: 700; font-size: 1.625rem; letter-spacing: -.02em; line-height: 1.15; margin-bottom: .75rem; }
+    .rates p { color: var(--soft); }
+    .toggle { display: inline-flex; padding: .3rem; border-radius: 999px; background: rgba(255,255,255,.06); border: 1px solid var(--panel-edge); margin-bottom: 1.5rem; }
+    .toggle button { font-family: var(--display); font-weight: 600; font-size: .9375rem; border: 0; background: transparent; color: var(--soft); padding: .5rem 1rem; border-radius: 999px; cursor: pointer; }
+    .toggle button[aria-pressed="true"] { background: #fff; color: #1E1A6E; }
+    .bars { display: grid; gap: 1.1rem; }
+    .bar-row { display: grid; gap: .4rem; }
+    .bar-label { display: flex; justify-content: space-between; gap: 1rem; font-family: var(--display); font-size: 1rem; }
+    .bar-label b { font-variant-numeric: tabular-nums; font-size: 1.25rem; }
+    .bar { height: .9rem; border-radius: 999px; background: rgba(255,255,255,.08); overflow: hidden; }
+    .bar i { display: block; height: 100%; border-radius: inherit; background: linear-gradient(90deg, #6F66FF, #A59EFF); transition: width .8s cubic-bezier(.2,.7,.2,1); }
+    .bar-row.dim .bar i { background: rgba(255,255,255,.35); }
+    .rates .read { margin-top: 1.25rem; font-size: 1.0625rem; color: var(--ink); min-height: 3.4em; }
+    .ex { font-family: var(--display); font-size: .8125rem; color: var(--soft); margin-top: .9rem; }
 
-      h1 {
-        font-size:calc(6.5px + 1.8vw);
-        font-weight:bold;
-      }
-      h2 {
-        font-size:calc(6.5px + 1.8vw);
-        font-weight:bold;
-      }
-      h3 {
-        font-size:calc(6.5px + 1.2vw);
-      }
-      h4 {
-        font-size:calc(6.5px + 1.5vw);
-      }
+    /* ---------- Fins of Fate (midnight) ---------- */
+    .fins { background: linear-gradient(180deg, #0E2E46 0%, var(--midnight) 30%, var(--abyss) 100%); overflow: hidden; }
+    .specks { position: absolute; inset: 0; pointer-events: none; background-image:
+      radial-gradient(2px 2px at 12% 18%, rgba(127,227,234,.7), transparent), radial-gradient(1.5px 1.5px at 78% 9%, rgba(127,227,234,.5), transparent),
+      radial-gradient(2px 2px at 64% 42%, rgba(127,227,234,.45), transparent), radial-gradient(1.5px 1.5px at 30% 66%, rgba(242,162,60,.5), transparent),
+      radial-gradient(2px 2px at 88% 74%, rgba(127,227,234,.55), transparent), radial-gradient(1.5px 1.5px at 6% 88%, rgba(127,227,234,.4), transparent);
+      animation: twinkle 7s ease-in-out infinite alternate; }
+    @keyframes twinkle { from { opacity: .45; } to { opacity: 1; } }
+    .fins .wrap { position: relative; }
+    .fins-title { display: flex; align-items: center; gap: 1.25rem; }
+    .fins-title img { width: clamp(5rem, 9vw, 7.5rem); filter: drop-shadow(0 12px 24px rgba(0,0,0,.5)); }
+    .show { margin-bottom: 1.5rem; }
+    .screen { position: relative; aspect-ratio: 16 / 9; border-radius: 1.5rem; overflow: hidden; background: #050E16; box-shadow: 0 50px 90px -40px rgba(0,0,0,.9), 0 0 0 1px rgba(127,227,234,.12); }
+    .screen img { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; opacity: 0; transition: opacity 1s ease; transform: scale(1.03); }
+    .screen img.on { opacity: 1; animation: drift 7s ease-out both; }
+    @keyframes drift { from { transform: scale(1.08); } to { transform: scale(1.02); } }
+    .screen .cap { position: absolute; left: 0; right: 0; bottom: 0; padding: 3rem 1.5rem 1.25rem; background: linear-gradient(180deg, transparent, rgba(3, 9, 15, .85)); font-family: var(--display); font-size: 1.0625rem; color: #fff; display: flex; justify-content: space-between; align-items: end; gap: 1rem; }
+    .screen .cap span:last-child { color: rgba(255,255,255,.7); font-size: .9375rem; font-variant-numeric: tabular-nums; flex: none; }
+    .show-ctl { display: flex; align-items: center; gap: .75rem; margin-top: 1rem; }
+    .thumbs { display: flex; gap: .6rem; overflow-x: auto; padding: .25rem .1rem .5rem; flex: 1; scrollbar-width: thin; }
+    .thumbs button { flex: none; width: 7.5rem; aspect-ratio: 16 / 9; border-radius: .6rem; overflow: hidden; padding: 0; border: 2px solid transparent; background: none; cursor: pointer; opacity: .55; transition: opacity .3s, border-color .3s; }
+    .thumbs button img { width: 100%; height: 100%; object-fit: cover; }
+    .thumbs button[aria-current="true"] { opacity: 1; border-color: var(--buoy); }
+    .thumbs button:hover { opacity: .9; }
+    .round { flex: none; width: 2.75rem; height: 2.75rem; border-radius: 50%; border: 1px solid var(--panel-edge); background: var(--panel); color: var(--ink); display: grid; place-items: center; cursor: pointer; }
+    .round svg { width: 1.1rem; height: 1.1rem; }
+    .figs { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 1.5rem; margin: 3.5rem 0 4rem; }
+    @media (min-width: 52rem) { .figs { grid-template-columns: repeat(4, minmax(0, 1fr)); } }
+    .figs div { border-top: 2px solid var(--buoy); padding-top: .9rem; }
+    .figs b { display: block; font-family: var(--display); font-weight: 800; font-size: clamp(2.25rem, 4.5vw, 3.25rem); line-height: 1; letter-spacing: -.03em; font-variant-numeric: tabular-nums; }
+    .figs span { display: block; margin-top: .4rem; font-family: var(--display); color: var(--soft); font-size: 1rem; }
 
-    </style>
-  </head>
-</html>
+    /* ---------- Earlier, skills, background (abyss) ---------- */
+    .deep { background: linear-gradient(180deg, var(--abyss) 0%, #050F18 100%); }
+    .timeline { list-style: none; margin: 0; padding: 0; position: relative; }
+    .timeline::before { content: ""; position: absolute; left: .45rem; top: .6rem; bottom: .6rem; width: 2px; background: var(--rule); }
+    .timeline > li { position: relative; padding: 0 0 2.5rem 2.5rem; }
+    .timeline > li::before { content: ""; position: absolute; left: 0; top: .45rem; width: 1rem; height: 1rem; border-radius: 50%; background: var(--abyss); border: 2px solid var(--glow); }
+    .timeline h3 { font-weight: 700; font-size: 1.375rem; letter-spacing: -.01em; }
+    .timeline .when { font-family: var(--display); color: var(--soft); font-size: .9375rem; margin: .2rem 0 .6rem; }
+    .timeline ul { margin: 0; padding-left: 1.1rem; }
+    .timeline ul li { margin-bottom: .35rem; }
+    .timeline ul li::marker { color: var(--buoy); }
+    .two-col { display: grid; gap: 3rem; }
+    @media (min-width: 62rem) { .two-col { grid-template-columns: 18rem minmax(0, 1fr); gap: 4rem; } }
+    .skills dt { font-family: var(--display); font-weight: 700; font-size: 1.125rem; }
+    .skills dd { margin: .3rem 0 0; color: var(--soft); }
+    .skills { margin: 0; }
+    .facts { margin: 0; padding-left: 1.1rem; display: grid; gap: .6rem; }
+    .facts li::marker { color: var(--buoy); }
+    .older { margin-top: 2rem; color: var(--soft); }
 
+    /* ---------- Sea floor ---------- */
+    .floor { background: linear-gradient(180deg, #050F18 0%, var(--floor) 40%); padding-block: 8rem max(3rem, env(safe-area-inset-bottom, 0px)); }
+    .floor h2 { font-weight: 800; font-size: clamp(3rem, 9vw, 7.5rem); line-height: .9; letter-spacing: -.025em; font-variation-settings: "wdth" 86; max-width: 10ch; }
+    .floor .lead { color: var(--soft); margin-top: 1.5rem; }
+    .mail { display: inline-block; margin-top: 2rem; font-family: var(--display); font-weight: 700; font-size: clamp(1.5rem, 3.6vw, 2.5rem); letter-spacing: -.02em; color: var(--glow); text-decoration: none; border-bottom: 2px solid rgba(127, 227, 234, .35); overflow-wrap: anywhere; }
+    .mail:hover { border-bottom-color: var(--glow); }
+    .floor .actions { animation: none; }
+    .fine { margin-top: 5rem; padding-top: 1.5rem; border-top: 1px solid var(--rule); display: flex; flex-wrap: wrap; justify-content: space-between; gap: 1rem; font-family: var(--display); font-size: .875rem; color: var(--soft); }
+
+    /* ---------- Depth gauge ---------- */
+    .gauge { display: none; }
+    @media (min-width: 90rem) {
+      .wrap { max-width: 66rem; }
+      .gauge {
+        display: block; position: fixed; right: max(1.25rem, env(safe-area-inset-right, 0px)); top: 50%; transform: translateY(-50%); z-index: 20;
+        font-family: var(--display); padding: .9rem .9rem .8rem 1.1rem; border-radius: 1.1rem;
+        background: rgba(243, 249, 251, .72); -webkit-backdrop-filter: blur(10px); backdrop-filter: blur(10px);
+        box-shadow: 0 10px 30px -18px rgba(13, 33, 49, .5); color: #0D2131; transition: background-color .5s ease, color .5s ease;
+      }
+      .gauge.dark { background: rgba(6, 18, 29, .7); color: #E7F1F5; box-shadow: 0 0 0 1px rgba(167, 205, 222, .12); }
+      .depth { text-align: right; font-weight: 800; font-size: 1.375rem; letter-spacing: -.02em; font-variant-numeric: tabular-nums; line-height: 1; margin-bottom: .2rem; }
+      .depth small { font-weight: 500; font-size: .8125rem; letter-spacing: 0; opacity: .7; }
+      .zone-name { text-align: right; font-size: .8125rem; opacity: .7; margin-bottom: .8rem; }
+      .gauge ol { list-style: none; margin: 0; padding: 0 1.1rem 0 0; position: relative; border-right: 2px solid rgba(120, 150, 170, .4); }
+      .gauge a { display: block; text-align: right; font-size: .8125rem; line-height: 1; padding: .5rem 0; color: inherit; opacity: .62; text-decoration: none; position: relative; }
+      .gauge a::after { content: ""; position: absolute; right: -1.1rem; top: 50%; width: .5rem; height: 2px; background: rgba(120, 150, 170, .55); }
+      .gauge a[aria-current="true"] { opacity: 1; font-weight: 700; }
+      .gauge .marker { position: absolute; right: .37rem; top: 0; width: .9rem; height: .9rem; margin-top: -.45rem; border-radius: 50%; background: var(--buoy); box-shadow: 0 0 0 3px rgba(242, 162, 60, .25), 0 0 14px rgba(242, 162, 60, .6); transition: transform .5s cubic-bezier(.3,.7,.2,1); }
+    }
+
+    @media (prefers-reduced-motion: reduce) {
+      html { scroll-behavior: auto; }
+      *, *::before, *::after { animation-duration: .001s !important; animation-delay: 0s !important; transition-duration: .001s !important; }
+      .js [data-reveal] { opacity: 1; transform: none; }
+    }
+    @media print {
+      .gauge, #caustics, .skip, .show-ctl, .agent-head .ctl { display: none !important; }
+      .zone { background: #fff !important; color: #000 !important; }
+    }
+  </style>
+</head>
 <body>
-  <header>
-    <nav class="navbar navbar-inverse navbar-fixed-top">
-      <div class="container-fluid">
-        <ul class="nav navbar-nav">
-          <li><a href="#top"><strong>Nathan's Website Portfolio</strong></a></li>
-          <li><a href="#Skills" class="visible-lg">Skills</a></li>
-          <li><a href="#Work Experience" class="visible-lg">Work Experience</a></li>
-          <li><a href="#Projects" class="visible-lg">Projects</a></li>
-          <li><a href="#Honors" class="visible-lg">Honors</a></li>
-          <li><a href="#Activities" class="visible-lg">Activities</a></li>
-          <li><a href="#Classes" class="visible-lg">Classes</a></li>
-          <li><a href="#Pictures" class="visible-lg">Pictures</a></li>
-        </ul>
-      </div>
-    </nav>
+  <a class="skip" href="#main">Skip to content</a>
 
-    <div Intro>
-      <br />
-      <br />
-      <div style="display: inline-block; vertical-align: top">
-        <div class="hidden-lg">
-          <br/>
-          <br/>
+  <nav class="gauge" aria-label="Sections">
+    <div class="depth" aria-hidden="true"><span id="depth-num">0</span> <small>m</small></div>
+    <div class="zone-name" id="zone-name" aria-hidden="true">Surface</div>
+    <ol>
+      <li><a href="#top" data-depth="0" data-zone="Surface">Home</a></li>
+      <li><a href="#thermo" data-depth="40" data-zone="Sunlight zone">Thermo Fisher</a></li>
+      <li><a href="#mendly" data-depth="220" data-zone="Twilight zone">Mendly</a></li>
+      <li><a href="#fins" data-depth="1000" data-zone="Midnight zone">Fins of Fate</a></li>
+      <li><a href="#earlier" data-depth="4000" data-zone="Abyssal zone">Earlier work</a></li>
+      <li><a href="#skills" data-depth="4700" data-zone="Abyssal zone">Skills</a></li>
+      <li><a href="#background" data-depth="5300" data-zone="Abyssal zone">Background</a></li>
+      <li><a href="#contact" data-depth="6000" data-zone="Sea floor">Contact</a></li>
+    </ol>
+    <span class="marker" aria-hidden="true"></span>
+  </nav>
+
+  <!-- Surface -->
+  <header class="zone zone-light hero" id="top">
+    <canvas id="caustics" aria-hidden="true"></canvas>
+    <div class="wrap">
+      <div class="hero-grid">
+        <div>
+          <h1 class="name"><span class="line"><span>Nathan</span></span><span class="line"><span>Gilbert</span></span></h1>
+          <p class="thesis">I build AI systems that work out the numbers in code and let the model explain them.</p>
+          <p class="intro">I'm an AI engineer at Thermo Fisher Scientific, building agentic analytics and AI coaching tools for HR. On my own time I run Mendly, a daily check-in app for therapy clients, and Mofghoul Studios, where a friend and I are making a co-op game for phones.</p>
+          <div class="actions">
+            <a class="btn solid" href="mailto:natedrewg@gmail.com"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><rect x="3" y="5" width="18" height="14" rx="2"/><path d="m3 7 9 6 9-6"/></svg>Email me</a>
+            <a class="btn" href="https://www.linkedin.com/in/nathan-gilbert44"><svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M4.98 3.5a2.5 2.5 0 1 1 0 5 2.5 2.5 0 0 1 0-5ZM3 9.75h4V21H3V9.75Zm6.5 0h3.8v1.6h.06c.53-1 1.84-2.06 3.79-2.06 4.05 0 4.8 2.67 4.8 6.13V21h-4v-5.02c0-1.2-.02-2.74-1.67-2.74-1.67 0-1.93 1.3-1.93 2.65V21h-4V9.75Z"/></svg>LinkedIn</a>
+            <a class="btn" href="https://github.com/natedrewg"><svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M12 2C6.48 2 2 6.58 2 12.22c0 4.5 2.87 8.32 6.84 9.67.5.1.68-.22.68-.49v-1.7c-2.78.62-3.37-1.37-3.37-1.37-.45-1.18-1.11-1.5-1.11-1.5-.91-.63.07-.62.07-.62 1 .07 1.53 1.06 1.53 1.06.9 1.57 2.35 1.12 2.92.86.09-.67.35-1.12.64-1.38-2.22-.26-4.56-1.14-4.56-5.06 0-1.12.39-2.03 1.03-2.75-.1-.26-.45-1.3.1-2.71 0 0 .84-.28 2.75 1.05a9.4 9.4 0 0 1 5 0c1.91-1.33 2.75-1.05 2.75-1.05.55 1.41.2 2.45.1 2.71.64.72 1.03 1.63 1.03 2.75 0 3.93-2.34 4.8-4.57 5.05.36.32.68.94.68 1.9v2.81c0 .27.18.6.69.49A10.24 10.24 0 0 0 22 12.22C22 6.58 17.52 2 12 2Z"/></svg>GitHub</a>
+          </div>
         </div>
-        <img
-          src="image0 (3).jpeg"
-          alt="Picture of Nathan"
-          width="270px"
-          height="270px"
-        />
+        <div class="portrait-wrap">
+          <div class="frame">
+            <picture>
+              <source srcset="assets/headshot.webp" type="image/webp">
+              <img class="portrait" src="assets/headshot.jpg" width="640" height="640" alt="Nathan Gilbert">
+            </picture>
+          </div>
+          <p class="place"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path d="M12 21s-7-6.2-7-11a7 7 0 0 1 14 0c0 4.8-7 11-7 11Z"/><circle cx="12" cy="10" r="2.5"/></svg>West Chester, Pennsylvania</p>
+        </div>
       </div>
 
-      <div style="display: inline-block">
-        <h3><strong>Nathan Billic-Gilbert - Graduated May 4, 2024</strong></h3>
-        <h3>Computer Science & Data Science</h3>
-        <h3>Double Major at Eastern University</h3>
-        <h3>Email: natedrewg@gmail.com </h3>
-        <h3>
-          Linked-In Profile:
-          <a
-            href="https://www.linkedin.com/in/nathan-gilbert-166392228"
-            target="_blank"
-            >Linked-In</a
-          >
-          
-        </h3>
-        <h3>
-          Github Profile:
-          <a href="https://github.com/natedrewg" target="_blank"
-            >Github Repos</a
-          >
-          
-        </h3>
-      </div>
-    </div>
-    <div style="display: inline-block; font-size:small;">
-      Last Updated: 5/8/24
+      <section class="building" aria-labelledby="building-h">
+        <h2 id="building-h">What I'm building now</h2>
+        <div class="cards">
+          <a class="card card-tf" href="#thermo">
+            <span class="art" aria-hidden="true"></span>
+            <span class="mini" aria-hidden="true">
+              <span class="q">What was headcount in Europe last quarter?</span>
+              <span class="plan">{ "measure": "headcount",
+  "time": "last full quarter",
+  "region": <b>"ask first"</b> }</span>
+            </span>
+            <span class="txt">
+              <span class="role">AI Engineer</span>
+              <h3>Thermo Fisher Scientific</h3>
+              <p>Natural-language analytics agents and an AI development coach for HR.</p>
+            </span>
+          </a>
+          <a class="card card-me" href="#mendly">
+            <span class="art" aria-hidden="true"></span>
+            <span class="txt">
+              <span class="role">Founder</span>
+              <h3>Mendly</h3>
+              <p>Daily check-ins for therapy clients, on the web, iPhone and Android.</p>
+            </span>
+          </a>
+          <a class="card card-fof" href="#fins">
+            <span class="art" aria-hidden="true"></span>
+            <span class="txt">
+              <span class="role">CEO and co-founder, Mofghoul Studios</span>
+              <h3>Fins of Fate</h3>
+              <p>A co-op roguelike for phones where you play a fish.</p>
+            </span>
+          </a>
+        </div>
+      </section>
     </div>
   </header>
 
+  <main id="main">
+    <!-- Sunlight zone -->
+    <section class="zone zone-light thermo sect" id="thermo" aria-labelledby="thermo-h">
+      <div class="wrap">
+        <div class="sect-top" data-reveal>
+          <div>
+            <h2 class="sect-title" id="thermo-h">Thermo Fisher Scientific</h2>
+            <p class="meta"><strong>AI Engineer, HR Digital.</strong> January 2026 to now, remote.</p>
+          </div>
+          <p class="lead">I build the AI tools Thermo Fisher's HR organization uses to get answers from workforce data and to plan people's development. Most of it runs on AWS Bedrock and AgentCore, behind Microsoft Entra sign-in, with data that has to stay inside strict privacy rules.</p>
+        </div>
 
-  <div Skills id="Skills">
-    <h2>Skills:</h2>
+        <div class="agent" id="agent" data-reveal>
+          <div class="agent-head">
+            <div>
+              <h3>How the analytics agent answers a question</h3>
+              <p class="agent-sub">Click through it with an example question.</p>
+            </div>
+            <div class="ctl">
+              <button class="chip-btn" id="agent-reset" type="button">Start over</button>
+            </div>
+          </div>
+          <div class="agent-body">
+            <ol class="steps" id="agent-steps">
+              <li><button type="button" data-step="0" aria-current="step"><span class="n">1</span>Ask</button></li>
+              <li><button type="button" data-step="1"><span class="n">2</span>Interpret</button></li>
+              <li><button type="button" data-step="2"><span class="n">3</span>Clarify</button></li>
+              <li><button type="button" data-step="3"><span class="n">4</span>Plan</button></li>
+              <li><button type="button" data-step="4"><span class="n">5</span>Query</button></li>
+              <li><button type="button" data-step="5"><span class="n">6</span>Review</button></li>
+            </ol>
+            <div class="stage">
+              <div class="panes" aria-live="polite">
+              <div class="pane on" data-pane="0">
+                <h4>A person asks in plain language</h4>
+                <p class="who r">HR leader, in Microsoft Teams</p>
+                <p class="bubble user">What was headcount in Europe last quarter?</p>
+                <p class="explain">Short, natural, and ambiguous in a way that changes the answer. A plain text-to-SQL agent would pick a meaning and never tell you.</p>
+              </div>
+              <div class="pane" data-pane="1">
+                <h4>Every term is matched against the semantic model</h4>
+                <p class="tokens">What was <mark class="ok">headcount</mark> in <mark class="amb">Europe</mark> <mark class="ok">last quarter</mark>?</p>
+                <ul class="resolve">
+                  <li><span class="t">headcount</span><span class="tag ok">Resolved</span> the Headcount measure, found in indexed metadata</li>
+                  <li><span class="t">last quarter</span><span class="tag ok">Resolved</span> the most recent full quarter</li>
+                  <li><span class="t">Europe</span><span class="tag amb">Ambiguous</span> where people work, or where their positions are based?</li>
+                </ul>
+              </div>
+              <div class="pane" data-pane="2">
+                <h4>It asks instead of guessing</h4>
+                <p class="who">Agent</p>
+                <p class="bubble agent-b">When you say Europe, do you mean where people work, or where their positions are based?</p>
+                <div class="options" role="group" aria-label="Example answer">
+                  <button class="opt" type="button" data-opt="work" aria-pressed="false">Where people work</button>
+                  <button class="opt" type="button" data-opt="position" aria-pressed="false">Where positions are based</button>
+                </div>
+                <p class="explain">Pick an answer to keep going. Known trouble spots like location, cost groupings and reporting lines get a targeted question, and the answer carries through the rest of the conversation.</p>
+              </div>
+              <div class="pane" data-pane="3">
+                <h4>The question becomes a strict, validated plan</h4>
+<pre class="code"><span class="c">// QueryPlan, checked before anything runs</span>
+{
+  <span class="k">"measure"</span>: <span class="s">"headcount"</span>,
+  <span class="k">"time"</span>: { <span class="k">"grain"</span>: <span class="s">"quarter"</span>, <span class="k">"offset"</span>: -1 },
+  <span class="k">"filters"</span>: [
+    { <span class="k">"field"</span>: <span class="s" id="plan-field">"work_location.region"</span>, <span class="k">"in"</span>: [<span class="s">"Europe"</span>] }
+  ],
+  <span class="k">"clarified"</span>: [<span class="s" id="plan-note">"Europe = where people work"</span>]
+}</pre>
+                <p class="explain">The model's job ends here. Measures, time logic, filters and groupings live in a typed contract that can be validated and reviewed.</p>
+              </div>
+              <div class="pane" data-pane="4">
+                <h4>The query is written by code, not by the model</h4>
+<pre class="code"><span class="f">EVALUATE</span>
+<span class="f">ROW</span> (
+  <span class="s">"Headcount"</span>,
+  <span class="f">CALCULATE</span> (
+    [Headcount],
+    <span class="f">TREATAS</span> ( { <span class="s">"Europe"</span> }, <span class="s" id="dax-col">'Work Location'[Region]</span> ),
+    'Date'[Relative Quarter] = -1
+  )
+)</pre>
+                <p class="explain">The same plan always produces the same query. It runs live against Power BI, and failures go through a repair loop instead of a retry-and-hope.</p>
+              </div>
+              <div class="pane" data-pane="5">
+                <h4>Nothing goes back until it passes review</h4>
+                <ul class="checks">
+                  <li><svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="12" r="11" fill="#2E9E8F"/><path d="m7 12.5 3.2 3.2L17 9" fill="none" stroke="#fff" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"/></svg>Plan validated against the semantic model</li>
+                  <li><svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="12" r="11" fill="#2E9E8F"/><path d="m7 12.5 3.2 3.2L17 9" fill="none" stroke="#fff" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"/></svg>Query ran, with row and evidence caps applied</li>
+                  <li><svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="12" r="11" fill="#2E9E8F"/><path d="m7 12.5 3.2 3.2L17 9" fill="none" stroke="#fff" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"/></svg>A reviewer step approved the result, or it would have been held back</li>
+                  <li><svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="12" r="11" fill="#2E9E8F"/><path d="m7 12.5 3.2 3.2L17 9" fill="none" stroke="#fff" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"/></svg>Run kept in encrypted storage, with tokens and timing recorded</li>
+                </ul>
+                <p class="answer">The answer goes back with its methodology and data considerations, so the person knows exactly what was counted.</p>
+              </div>
+              </div>
+              <div class="stage-nav">
+                <button class="nav-btn" id="agent-prev" type="button" disabled><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M15 6l-6 6 6 6"/></svg>Back</button>
+                <span class="count" id="agent-count">Step 1 of 6</span>
+                <button class="nav-btn solid" id="agent-next" type="button"><span id="agent-next-label">Next: Interpret</span><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M9 6l6 6-6 6"/></svg></button>
+              </div>
+            </div>
+          </div>
+          <p class="agent-foot">An illustration with an example question. It shows the approach, not real data, field names or code.</p>
+        </div>
 
-
-    <div class="row">
-      <div class="col-sm-4">
-        <h3>Web Development:</h3>
-        <ul>
-          <li>HTML & CSS</li>
-          <li>Javascript</li>
-          <li>PHP & PHPMyAdmin</li>
-          <li>Xampp</li>
-          <li>AWS - Amplify</li>
-          <li>Bootstrap & Tailwind CSS</li>
-        </ul>
-      </div>
-      <div class = "col-sm-4" text-align: >
-        <h3>ServiceNow Development:</h3>
-        <ul>
-          <li>Javascript</li>
-          <li>Agile Methodologies</li>
-          <li>JSON</li>
-          <li>REST API</li>
-          <li>Graph API</li>
-        </ul>
-      </div>
-      <div class ="col-sm-3">
-        <h3>Other Experience:</h3>
-        <ul>
-          <li>Unix & Linux Environments</li>
-          <li>Scripting w/ Python</li>
-          <li>Object Oriented Programming with C++</li>
-          <li>Procedural Programming Language with C</li>
-        </ul>
-      </div>
-    </div>
-
-
-
-
-
-  </div>
-
-  <div Work Experience id="Work Experience">
-    <h2>Work Experience:</h2>
-
-    <div class ="row">
-      <div class ="col-sm-6">
-        <div ServiceNow Development Intern>
-          <h3 style="display: inline">ServiceNow Development Intern</h3>
-          <br />
-          <p style="display: inline">
-          <strong>Employer:</strong> Thermo Fisher Scientific <br />
-          <strong>Dates:</strong> May 2022-Nov 2022
-          </p>
-        <ul>
-         <li>Developed an innovative software solution integrating ServiceNow with Microsoft Teams,
-          serving as a ticket approval reminder system designed to benefit 
-          a user base of 125,000 employees.</li>
-         <li>Engaged in productive discussions with leadership at various levels, including Vice President, 
-          Senior Director, and multiple managers, to explore diverse leadership ideologies and gain insights into 
-          their pathways to success.</li>
-          <li>
-            Demonstrated effective collaboration within the team through bi-weekly meetings utilizing the scrum platform.
-          </li>
-          <li>Acquired valuable experience in Javascript, Graph API, HTML, JSON, and Agile Methodologies 
-            through hands-on experience and application.</li>
-          <li>Exemplary performance during the summer internship led to an extension throughout the Fall in order
-            to maintain momentum on the integration project.
-          </li>
-        </ul>
+        <div class="grid three">
+          <article class="item" data-reveal>
+            <h3>The first version: a governed SQL agent</h3>
+            <p>Built with Strands on AgentCore, it answered people-analytics questions with one governed Athena query inside allowed fields and aggregation thresholds. I added AgentCore Memory for follow-ups, hard limits on iterations, time and tokens, and OpenTelemetry tracing with cost per stage.</p>
+            <p class="stack">Strands Agents, AgentCore Memory, Athena, OpenTelemetry, DynamoDB</p>
+          </article>
+          <article class="item" data-reveal>
+            <h3>A Microsoft Teams app in front of both</h3>
+            <p>React and Fluent UI inside Teams, calling the AgentCore runtime directly: single sign-on, streamed responses, conversation history, response ratings and personalization. It gives non-technical people self-serve access to workforce data without writing SQL.</p>
+            <p class="stack">React, Fluent UI, Teams SDK, Entra SSO</p>
+          </article>
+          <article class="item" data-reveal>
+            <h3>Leadership assessments and an AI coach</h3>
+            <p>A 180-style capability assessment platform built for a global workforce of 100,000+ employees, with reviewer invitations, paired results, PDF reports and a coach that turns results into a 70/20/10 development plan. Coaches are tailored by role and kept out of pay and promotion decisions.</p>
+            <p class="stack">Amplify, AppSync, DynamoDB, Entra OIDC, Microsoft Graph</p>
+          </article>
+          <article class="item" data-reveal>
+            <h3>The HR Digital Hub</h3>
+            <p>A shared platform so every HR tool gets the same sign-in, navigation, role-based access, entitlement checks and feedback, through a navigation web component other apps embed. Admins can preview exactly what another person is allowed to see.</p>
+            <p class="stack">React, Web Components, API Gateway, Lambda, DynamoDB</p>
+          </article>
+          <article class="item" data-reveal>
+            <h3>Guided intake for a confidential HR process</h3>
+            <p>Versioned projects with optimistic concurrency, access limited to named participants, reviewer states and a full audit trail, plus a Bedrock assistant that helps people write a clear business case while making clear that HR Compliance makes the call.</p>
+            <p class="stack">S3, Bedrock, hub sign-in and navigation</p>
+          </article>
+          <article class="item" data-reveal>
+            <h3>Evaluating the agents</h3>
+            <p>Evaluation suites that benchmark our agents across OpenAI and Anthropic models for accuracy, consistency and domain performance, run as multithreaded, scheduled Databricks jobs so quality checks don't depend on someone reading answers by hand.</p>
+            <p class="stack">Databricks, Python, OpenAI and Anthropic APIs</p>
+          </article>
         </div>
       </div>
-      <div class ="col-sm-3">
-        <div Carpet Installer Assistant>
-        <h3 style="display: inline">Carpet Installer Assistant</h3>
-        <br />
-        <p style="display: inline">
-          <strong>Employer:</strong> G&F Carpet <br />
-          <strong>Dates:</strong> May 2021-July 2021
-        </p>
-        <ul>
-          <li>
-            Assisted lead installer with installing floor covering materials
-          </li>
-          <li>Kept a tight schedule to keep up with demands</li>
-          <li>Arrived promptly every day in order to prepare before the day started</li>
-        </ul>
-      </div>
-      </div>
-        <div class ="col-sm-3">
-          <div Shift Leader>
-          <h3 style="display: inline">Shift Leader</h3>
-          <br />
-          <p style="display: inline">
-            <strong>Employer:</strong> Jake's Wayback Burgers <br />
-            <strong>Dates:</strong> June 2019-Sept 2020
-          </p>
-          <ul>
-            <li>Responsible for opening and closing establishment 3 days a week</li>
-            <li>
-              Provided esteemed customer service in a fast-paced environment
-            </li>
-            <li>
-              Led staff to complete specific tasks such as cleaning and cooking
-            </li>
-          </ul>
+    </section>
+
+    <div class="descent" aria-hidden="true"></div>
+
+    <!-- Twilight zone -->
+    <section class="zone zone-dark mendly sect" id="mendly" aria-labelledby="mendly-h">
+      <div class="wrap">
+        <div class="sect-top" data-reveal>
+          <div>
+            <h2 class="sect-title" id="mendly-h">Mendly</h2>
+            <p class="meta"><strong>Founder and sole engineer.</strong> October 2025 to now.</p>
+          </div>
+          <div>
+            <p class="lead">A two-minute daily check-in for therapy clients, made of questions their therapist chooses. The therapist sees how the week went before the next session and what lined up with the client's better days. I designed, built and run all of it: web, iPhone, Android, infrastructure and the business.</p>
+            <div class="stores">
+              <a class="btn solid" href="https://mendly.me">Visit mendly.me</a>
+              <a class="btn" href="https://apps.apple.com/us/app/mendly-wellbeing-tracker/id6810466190">App Store</a>
+              <a class="btn" href="https://play.google.com/store/apps/details?id=me.mendly.app">Google Play</a>
+            </div>
           </div>
         </div>
+
+        <div class="phones" data-reveal>
+          <figure><img src="assets/mendly-checkin.webp" width="600" height="1304" loading="lazy" alt="The Mendly daily check-in on iPhone: a 1 to 10 rating of the day, then questions about sleep, energy, exercise and stress."></figure>
+          <figure><img src="assets/mendly-insights.webp" width="600" height="1304" loading="lazy" alt="Mendly's Insights screen with an average rating, a day streak, a 14-day chart and best and hardest days."></figure>
+          <figure><img src="assets/mendly-weekly.webp" width="600" height="1304" loading="lazy" alt="Mendly's weekly read: a short written summary of the week built from the person's own check-ins."></figure>
+        </div>
+
+        <div class="rates" data-reveal>
+          <div>
+            <h3>Rates, not averages</h3>
+            <p>"Your mood averaged 6.3 on exercise days" is hard to feel anything about. Mendly says how often a day beat your usual instead, and only shows a comparison once it clears a statistical test. Every number is computed in code before a model writes a word about it.</p>
+          </div>
+          <div>
+            <div class="toggle" role="group" aria-label="How to show the comparison">
+              <button type="button" data-mode="avg" aria-pressed="false">Averages</button>
+              <button type="button" data-mode="rate" aria-pressed="true">Rates</button>
+            </div>
+            <div class="bars">
+              <div class="bar-row"><div class="bar-label"><span>Days with exercise</span><b id="v1">48%</b></div><div class="bar"><i id="b1" style="width:48%"></i></div></div>
+              <div class="bar-row dim"><div class="bar-label"><span>Days without</span><b id="v2">6%</b></div><div class="bar"><i id="b2" style="width:6%"></i></div></div>
+            </div>
+            <p class="read" id="read">Exercise days beat your usual day 48% of the time, against 6% for days without.</p>
+            <p class="ex">Example figures, in the style of Mendly's own explainer.</p>
+          </div>
+        </div>
+
+        <div class="grid three">
+          <article class="item" data-reveal><h3>Built for therapists</h3><p>Per-client check-ins from 125 wellbeing metrics or custom questions, PHQ-9, GAD-7, PCL-5 and AUDIT-C on a schedule, trend and correlation dashboards, and flags for a week worth a closer look.</p></article>
+          <article class="item" data-reveal><h3>One app, two kinds of account</h3><p>A client invited by a therapist sees only the check-in. Someone using Mendly alone gets history, insights and an optional Plus plan. Separate identity pools keep the two apart, so a therapist never sees a personal account.</p></article>
+          <article class="item" data-reveal><h3>Language with guardrails</h3><p>A Claude model on Bedrock writes the weekly read from facts it's handed, then a safety filter blocks diagnostic and causal claims and a crisis screen points to 988. No client clinical data ever reaches a model.</p></article>
+          <article class="item" data-reveal><h3>Private by design</h3><p>Reminders never reveal what someone tracks or how they answered. Face ID and auto-lock, no ads or ad trackers, and sleep, steps and heart-rate variability from Apple Health and Health Connect.</p></article>
+          <article class="item" data-reveal><h3>Security and compliance</h3><p>Role-based access across therapist, client and admin, MFA, CSRF protection, rate limiting, audit logging, versioned terms, data export and full account deletion, on HIPAA-eligible AWS services.</p></article>
+          <article class="item" data-reveal><h3>A real business</h3><p>Free for two clients, then monthly or annual plans through Stripe, with Plus subscriptions on mobile through RevenueCat. I also run the marketing site, search pages and comparison pages.</p></article>
+        </div>
+        <p class="stack" style="margin-top:2.5rem">Next.js, React, TypeScript, Tailwind, Expo and React Native, AWS Amplify, Cognito, Aurora PostgreSQL, Drizzle, DynamoDB, SES, Bedrock, Stripe, RevenueCat, Twilio, Playwright</p>
       </div>
+    </section>
+
+    <!-- Midnight zone -->
+    <section class="zone zone-dark fins sect" id="fins" aria-labelledby="fins-h">
+      <div class="specks" aria-hidden="true"></div>
+      <div class="wrap">
+        <div class="sect-top" data-reveal>
+          <div>
+            <div class="fins-title">
+              <img src="assets/fins-logo.webp" width="360" height="347" alt="">
+              <h2 class="sect-title" id="fins-h">Fins of Fate</h2>
+            </div>
+            <p class="meta"><strong>CEO and co-founder, Mofghoul Studios.</strong> September 2026 to now.</p>
+          </div>
+          <div>
+            <p class="lead">A co-op roguelike for phones (working title Fish Dungeon). Pick a fish, draft new powers every run, and fight through twenty underwater worlds from a puddle down to the abyss. A friend and I started Mofghoul Studios to make it; I run the business side and write much of the game. It's in playtests now, coming to iPhone and iPad first.</p>
+            <div class="stores">
+              <a class="btn solid" href="https://mofghoul.com/fins-of-fate/">See the game</a>
+              <a class="btn" href="https://mofghoul.com/studio/">Meet the studio</a>
+            </div>
+          </div>
+        </div>
+
+        <div class="show" data-reveal>
+          <div class="screen" id="screen">
+            <img class="on" src="assets/fins/coop-3.webp" width="1600" height="900" alt="Three fish fighting together in the Open Ocean while the pufferfish's spike attack goes off.">
+            <img src="assets/fins/koi-angry.webp" width="1600" height="900" loading="lazy" alt="The Koi Emperor boss getting angry in its second phase in the Pond.">
+            <img src="assets/fins/midnight-eel.webp" width="1600" height="900" loading="lazy" alt="An electric eel chaining lightning through the dark Midnight Zone.">
+            <img src="assets/fins/draft.webp" width="1600" height="900" loading="lazy" alt="Levelling up mid-run and choosing one of three power cards.">
+            <img src="assets/fins/pvp-3v3.webp" width="1600" height="900" loading="lazy" alt="Round two of a 3v3 versus match.">
+            <img src="assets/fins/legendary-eel.webp" width="1600" height="900" loading="lazy" alt="The electric eel reaching Legendary rarity.">
+            <img src="assets/fins/tank-reef.webp" width="1600" height="900" loading="lazy" alt="The player's fish tank, grown into a grand reef.">
+            <img src="assets/fins/world-map-cavern.webp" width="1600" height="900" loading="lazy" alt="The world map for the Flooded Cavern.">
+            <p class="cap"><span id="cap-text">Three-player co-op in the Open Ocean</span><span id="cap-count">1 / 8</span></p>
+          </div>
+          <div class="show-ctl">
+            <button class="round" type="button" id="show-toggle" aria-label="Pause slideshow"><svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><rect x="6" y="5" width="4" height="14" rx="1"/><rect x="14" y="5" width="4" height="14" rx="1"/></svg></button>
+            <div class="thumbs" id="thumbs" aria-label="Choose a screenshot"></div>
+          </div>
+        </div>
+
+        <div class="figs" data-reveal>
+          <div><b>20</b><span>underwater worlds</span></div>
+          <div><b>3</b><span>players in co-op</span></div>
+          <div><b>3v3</b><span>and 1v1 versus</span></div>
+          <div><b>17</b><span>languages</span></div>
+        </div>
+
+        <div class="grid three">
+          <article class="item" data-reveal><h3>Deterministic multiplayer</h3><p>Every phone in a party runs the same simulation from the same inputs, and only inputs cross the network. Lockstep over FishNet, with Unity Relay and Lobby for party codes, makes co-op and versus work without game servers.</p></article>
+          <article class="item" data-reveal><h3>Our own game server</h3><p>A Cloudflare Worker and D1 database for leaderboards, player cards, reports and moderation, account recovery, privacy-respecting analytics, and checking purchases with Apple and Google before anything is granted.</p></article>
+          <article class="item" data-reveal><h3>Accounts that follow you</h3><p>Guest play with no login, then optional accounts and cloud saves on Unity Authentication and Cloud Save, with conflict-aware sync when two devices disagree.</p></article>
+          <article class="item" data-reveal><h3>Tuned by bots</h3><p>Bots play every level so difficulty is balanced against real results before we play it ourselves. A health check runs before each commit, and GitHub Actions builds Android and Windows in the cloud.</p></article>
+          <article class="item" data-reveal><h3>Tools that make content</h3><p>Python and Blender generators for models, icons, armour and fonts, translations kept in sync by script, and a private browser playtest behind a key gate.</p></article>
+          <article class="item" data-reveal><h3>Ready for the stores</h3><p>Opt-in analytics only for players 16 and up, no ads for under-13s and only opt-in rewarded ads for anyone else, report and block, account deletion, and nothing that wins for money. I formed Mofghoul Studios LLC in Pennsylvania to publish it.</p></article>
+        </div>
+        <p class="stack" style="margin-top:2.5rem">Unity 6 (URP), C#, FishNet, Unity Gaming Services, Cloudflare Workers, D1 and R2, GitHub Actions, Blender, Python</p>
+      </div>
+    </section>
+
+    <!-- Abyssal zone -->
+    <div class="zone zone-dark deep">
+      <section class="sect" id="earlier" aria-labelledby="earlier-h">
+        <div class="wrap two-col">
+          <div data-reveal>
+            <h2 class="sect-title" id="earlier-h" style="font-size:clamp(2.4rem,4.6vw,3.75rem)">Earlier work</h2>
+            <p class="meta" style="margin-top:1rem"><strong>Thermo Fisher Scientific,</strong> 2022 to 2026</p>
+            <p style="margin-top:1.25rem;color:var(--soft)">Eighteen months in the Digital Leadership Development Program, rotating every six months, plus co-leading its onboarding committee for 100+ members.</p>
+          </div>
+          <ol class="timeline" data-reveal>
+            <li>
+              <h3>Digital Analyst</h3>
+              <p class="when">July 2025 to January 2026, Frederick, MD</p>
+              <ul>
+                <li>Ran monthly service-delivery reviews with 20+ business leaders.</li>
+                <li>Audited 85 Corporate IT teams and documented their services.</li>
+                <li>Built a SharePoint hub kept current by Power Automate flows that sync Monday.com.</li>
+              </ul>
+            </li>
+            <li>
+              <h3>Data Scientist</h3>
+              <p class="when">February to July 2025, Pittsburgh, PA</p>
+              <ul>
+                <li>Built a metadata app with anomaly detection across 10+ production models, catching drift and data-quality failures early.</li>
+                <li>Automated AWS access-key rotation in Databricks.</li>
+              </ul>
+            </li>
+            <li>
+              <h3>Data Engineer</h3>
+              <p class="when">July 2024 to February 2025, Pittsburgh, PA</p>
+              <ul>
+                <li>Built ETL pipelines bringing 22 external APIs into central AWS storage.</li>
+                <li>Analyzed UK and Ireland pay trends with PySpark, and turnover against market and FRED data.</li>
+                <li>Built two Microsoft Copilot chatbots and a Glassdoor scraper for job-market trends.</li>
+              </ul>
+            </li>
+            <li>
+              <h3>ServiceNow Development Intern</h3>
+              <p class="when">May to November 2022, Frederick, MD</p>
+              <ul>
+                <li>Connected ServiceNow to Microsoft Teams through the Graph API so approvers get reminded about waiting tickets. Extended through the fall to finish it.</li>
+                <li>Named one of WayUp's Top 100 Interns of 2022.</li>
+              </ul>
+            </li>
+          </ol>
+        </div>
+      </section>
+
+      <section class="sect" id="skills" aria-labelledby="skills-h" style="padding-top:2rem">
+        <div class="wrap two-col">
+          <div data-reveal><h2 class="sect-title" id="skills-h" style="font-size:clamp(2.4rem,4.6vw,3.75rem)">Skills</h2></div>
+          <dl class="skills grid two" data-reveal>
+            <div><dt>AI and LLM systems</dt><dd>AWS Bedrock and AgentCore, Strands Agents, tool use, agent memory, retrieval with OpenSearch, evaluation, guardrails, OpenTelemetry, OpenAI and Anthropic APIs</dd></div>
+            <div><dt>Data</dt><dd>Python, SQL, PySpark, Databricks, Athena, Power BI and DAX, PostgreSQL, DynamoDB, statistics, anomaly detection</dd></div>
+            <div><dt>Web and mobile</dt><dd>TypeScript, React, Next.js, React Native and Expo, Tailwind, Fluent UI, Playwright</dd></div>
+            <div><dt>Cloud</dt><dd>AWS (Lambda, API Gateway, AppSync, Amplify, Cognito, S3, Aurora, SES), Cloudflare Workers, D1 and R2, GitHub Actions</dd></div>
+            <div><dt>Games</dt><dd>Unity 6, C#, FishNet netcode, Unity Gaming Services, Blender with Python</dd></div>
+            <div><dt>Security</dt><dd>Microsoft Entra ID and OIDC, role-based access, row-level security, MFA, CSRF protection, audit logging, credential rotation</dd></div>
+          </dl>
+        </div>
+      </section>
+
+      <section class="sect" id="background" aria-labelledby="background-h" style="padding-top:2rem">
+        <div class="wrap two-col">
+          <div data-reveal>
+            <h2 class="sect-title" id="background-h" style="font-size:clamp(2.4rem,4.6vw,3.75rem)">Background</h2>
+            <p class="meta" style="margin-top:1rem"><strong>Eastern University</strong><br>BS, Computer Science and Data Science<br>Graduated May 2024</p>
+          </div>
+          <div data-reveal>
+            <ul class="facts">
+              <li>Founded and led Lambda, Eastern's computer science club, bringing in working professionals to talk about their jobs.</li>
+              <li>Captain of the men's lacrosse team, second-team All-MAC, and holder of the school's single-game record for caused turnovers.</li>
+              <li>Teaching assistant in computer science, where I set up automated grading in CodeGrade so students got feedback right away.</li>
+              <li>Sigma Zeta honor society, Dean's List, and volunteer coach for a youth lacrosse league.</li>
+            </ul>
+            <p class="older">Older projects on GitHub: a <a href="https://github.com/natedrewg/Lacrosse-Database">lacrosse conference database</a>, a <a href="https://github.com/natedrewg/ShellProject">Unix shell</a>, and <a href="https://github.com/natedrewg/Scripts">Python automation scripts</a>.</p>
+          </div>
+        </div>
+      </section>
     </div>
+  </main>
 
-  <div Projects id="Projects">
-    <h2>Projects:</h2>
-
-    <h3>Full Stack Amplify-Powered Web-App using React JS</h3>
-    
-    <h3>ServiceNow to Microsoft Teams Integration</h3>
-
-    <h3>
-      <a href="https://main.d3kvhqjk7zzkn0.amplifyapp.com/" target="_blank"
-        >AI Powered Password Strength Tester</a
-      >
-    </h3>
-
-    <h3>
-      <a href="https://github.com/natedrewg/Lacrosse-Database" target="_blank"
-        >Division 3 Mac Lacrosse Database on Github</a
-      >
-    </h3>
-
-    <h3>
-      <a href="https://github.com/natedrewg/Website-Portfolio" target="_blank"
-        >Website Portfolio on Github</a
-      >
-    </h3>
-    <h3>
-      <a href="https://github.com/natedrewg/ShellProject" target="_blank"
-        >Shell Project on Github</a
-      >
-    </h3>
-
-    <h3><a href="https://github.com/natedrewg/Scripts" target="_blank">Automation Through Python on Github</a></h3>
-
-    <br/>
-  </div>
-
-    <div class ="row">
-      <div class="col-sm-6">
-        <h2>About Me:</h2>
-        <p>
-          As a student at Eastern University, I am currently pursuing dual majors in computer science and data science.  
-          Alongside my studies, I participate in Eastern University's lacrosse team, which has imparted 
-          invaluable lessons about problem-solving, effective team leadership, and the determination to achieve my goals. 
-          My enthusiasm for continuous growth has led me to explore diverse areas, including leadership techniques, 
-          website development, and database creation and integration. I am driven to excel in these areas and eager to 
-          utilize the skills that I have obtained in my future endeavors. 
-        </p>
+  <!-- Sea floor -->
+  <footer class="zone zone-dark floor" id="contact">
+    <div class="wrap">
+      <h2 data-reveal>Let's talk.</h2>
+      <p class="lead" data-reveal>About production AI, building products on the side, or games. Email is the fastest way to reach me.</p>
+      <a class="mail" href="mailto:natedrewg@gmail.com">natedrewg@gmail.com</a>
+      <div class="actions">
+        <a class="btn" href="https://www.linkedin.com/in/nathan-gilbert44">LinkedIn</a>
+        <a class="btn" href="https://github.com/natedrewg">GitHub</a>
+        <a class="btn" href="https://mendly.me">Mendly</a>
+        <a class="btn" href="https://mofghoul.com">Mofghoul Studios</a>
       </div>
-      <div class="col-sm-6">
-      <div Honors id="Honors">
-      <h2>Leadership & Honors:</h2>
-      <ul>
-        <li><strong>Founder & President of Lambda, Computer Science Club, at Eastern University</strong></li>
-        <li><strong>Captain of <a href="https://goeasterneagles.com/sports/mens-lacrosse/roster/nathan-gilbert/9343" target="_blank">
-        Eastern University Men's Lacrosse Team 
-        </a></strong></li>
-        <li>        
-          <strong
-            >Top 100 Intern According to 2022,
-            <a
-              href="https://www.nationalinternday.com/2022-top-100-interns"
-              target="_blank"
-              >Wayups National Intern Day Website</a
-            >
-          </strong>
-        </li>
-        
-        <li>
-          <strong>Deans List at Eastern University</strong>
-        </li>
-        <li>
-          <strong>Sigma Zeta - Honors Society of Computer Science member</strong>
-        </li>
-      </ul>
+      <div class="fine"><span>Nathan Gilbert, West Chester, PA</span><span>Last updated October 2026</span></div>
     </div>
-      </div>
-    </div>
+  </footer>
 
-
-  <div Activities id="Activities">
-        <h2>Activities:</h2>
-        <h3><strong>President & Founder of Lambda</strong></h3>
-        <ul>
-          <li>Lambda is a computer science club focused on networking and panel-type events. The club sets up speakers throughout 
-            semesters where a professional will explain what they do and then take questions from the group of students listening.
-          </li>
-          <li>30 Active Members from one year of being in existence.</li>
-          <li>Planning to take requests from Eastern's community for projects that will improve students' everyday life.</li>
-        </ul>
-        <h3><strong>Captain of Eastern Men's Lacrosse</strong></h3>
-        <ul>
-          <li>Became captain junior year spring.</li>
-          <li>Achieved second team All MAC honors.</li>
-          <li>Broke the single game caused turnover record at Eastern University.</li>
-        </ul>
-         
-          <h3><strong>Teaching Assistant for Computer Science Department</strong></h3>
-        <ul>
-          <li>Automated grading through the medium of code grade.</li>
-          <li>Students could get feedback instantly in order to help with learning.</li>
-        </ul>
-        <h3><strong>Volunteer Lacrosse Coach</strong></h3>
-        <ul>
-          <li>Throughout summer I volunteer coach with the Avon Grove lacrosse program. Helping kids 1st through 4th grade in a 3v3 league.</li>
-        </ul>
-       
-        </ul>
-
-  <div Classes id="Classes">
-    <h2>Classes:</h2>
-  <p>Click a class to see the class descriptions</p>
-
-  <button type="button" class="collapsible">C++</button>
-  <div class="content">
-    <p>
-      An introduction to computer programming using the C++ language. The course
-      will teach the concepts of problem-solving and procedural design, and will
-      introduce object-oriented programming through the use of C++. Students
-      will learn to design, code, test, debug, and document computer programs.
-    </p>
-  </div>
-  <button type="button" class="collapsible">Software Engineering</button>
-  <div class="content">
-    <p>
-      This course highlights various technological updates of recent years and
-      provides students with highly relevant and current information as it
-      pertains to the practice of software development. The topics addressed
-      within the course include the areas of Software Engineering best practices,
-      dependability & security, advanced Software Engineering concepts, and
-      software management. The course strives to set students on the journey to
-      becoming the innovators of tomorrow and creating software that will make
-      our world is a better, safer, and more advanced place to live. The course is
-      an introduction to Software Engineering covering the development life cycle
-      models, requirements analysis and specification design concepts and
-      methods, testing, maintenance, CASE tools and management concerns.
-      Additional topics may include reuse metrics, experimentation,
-      reengineering, development environments, and standards.
-    </p>
-  </div>
-  <button type="button" class="collapsible">Python</button>
-  <div class="content">
-    <p>
-      This course will teach students the introductory skills of programming,
-      problem solving and algorithmyic thinking in Python. Topics include
-      variables, input/output, conditional statements/logic, Boolean
-      expressions, flow control, loops and functions. We will use the Cloud
-      9(http://c9.io) integraded development environment (IDE).
-    </p>
-  </div>
-
-  <button type="button" class="collapsible">Data Structures</button>
-  <div class="content">
-    <p>
-      This course is a continuation of CSCI 200 with a focus on objects,
-      classes, and data structures in C++. Students will learn the
-      implementation and use of C++ objects to represent mathematical objects,
-      as well as abstract data types in C++ programs.
-    </p>
-  </div>
-
-  <button type="button" class="collapsible">Networking</button>
-  <div class="content">
-    <p>
-      The theory and practice behind computer networking design and
-      implementation, particularly related to the internet. Topics include:
-      structure and components of computer networks; routing, addressing, packet
-      switching; network protocols; flow and error control; local area networks;
-      network security.
-    </p>
-  </div>
-
-  <button type="button" class="collapsible" >
-    Stats for Data Analysis
-  </button>
-  <div class="content">
-    <p>
-      Introduction to statistics with an emphasis on theory and application.
-      Includes probability; sampling; t-test, analysis of variance; chi square;
-      correlation; regression; effect size. Intended as an introduction for
-      students meeting additional statistics, data science, or data analysis
-      coursework. This course does not count toward the major or minor in
-      mathematics.
-    </p>
-  </div>
-
-  <button type="button" class="collapsible" >
-    Anaylysis of Algorithms
-  </button>
-  <div class="content">
-    <p>
-      A study of algorithms and methods of analysis of their complexity: asymptotic analysis of complexity, searching and sorting algorithms, language processing algorithms, NP-completeness.
-    </p>
-  </div>
-
-  <button type="button" class="collapsible" >
-    Programming Languages
-  </button>
-  <div class="content">
-    <p>
-      An introduction to the theory, design, and implementation of programming languages - the course covers the general concepts common to all programming languages. Language types (functional, procedural, object-oriented, scripting) are compared and implementation strategies are discussed.
-    </p>
-  </div>
-
-  <button type="button" class="collapsible">
-    Operating Systems
-  </button>
-  <div class="content">
-    <p>
-      A study of the techniques and algorithms of operating systems, and implementation of these algorithms. Topics include computer organization; processes, synchronization, scheduling; I/O; memory management; file systems.
-    </p>
-  </div>
-  <button type="button" class="collapsible">
-    Artificial Intelligence
-  </button>
-  <div class="content">
-    <p>
-      This course examines algorithms and systems that can learn without being explicitly programmed. Topics include: clustering, classification, prediction, supervised learning, unsupervised learning, decision trees, support vector machines, random forests, and regression. The course begins with an overview of machine learning systems, then escorts students through an end-to-end machine learning project example involving regression. Classification systems are considered and the metrics used to evaluate classifiers are discussed. The training of linear models is discussed, with special attention paid to closed-form solutions and gradient descent algorithms.    </p>
-  </div>
-  <button type="button" class="collapsible">
-    Ethical and Philosophical Issues in Computer Science and Data Science
-  </button>
-  <div class="content">
-    <p>
-      This course will introduce students to various ethical issues related to computing technology and the internet. Free/open source software, cybersecurity, privacy, monopoly power and artificial intelligence will be considered within a Christian framework.    </p>
-  </div>
-  </div>
-  
-  <div Pictures id="Pictures">
-    <h2>Pictures:</h2>
-    <div class="row">
-      <div class="col-sm-3">
-        <img
-          src="Internship.jpg"
-          alt="Picture of coworker and boss at
-        internship with Thermofisher"
-          style="display: inline"
-          height="65%"
-          width="75%"
-        />
-        <p  style="text-align: left">
-          Picture at Thermo Fisher
-        </p>
-      </div>
-
-      <div class="col-sm-3">
-        <img
-          src="Lacrosse.JPG"
-          alt="Picture of Nathan playing lacrosse"
-          style="display: inline"
-          height="65%"
-          width="75%"
-        />
-        <p style="text-align: left">Picture of me playing lacrosse</p>
-      </div>
-
-
-      <div class="col-sm-3">
-        <img
-          src="Jaz.JPG"
-          alt="Picture of my dog!"
-          style="display: inline"
-          height="65%"
-          width="75%"
-        />
-        <p style="text-align: left">Picture of my dog</p>
-      </div>
-      <div class="col-sm-3">
-        <img
-          src="Parents.JPG"
-          alt="Picture of my parents and I!"
-          style="display: inline"
-          height="65%"
-          width="75%"
-        />
-        <p style="text-align: left">Picture of my family</p>
-      </div>
-    </div>
-  </div>
   <script>
-    var coll = document.getElementsByClassName("collapsible");
-    var i;
+  (function () {
+    var root = document.documentElement;
+    var reduce = window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+    var hasIO = 'IntersectionObserver' in window;
+    root.classList.add('js');
 
-    for (i = 0; i < coll.length; i++) {
-      coll[i].addEventListener("click", function () {
-        this.classList.toggle("active");
-        var content = this.nextElementSibling;
-        if (content.style.display === "block") {
-          content.style.display = "none";
-        } else {
-          content.style.display = "block";
-        }
-      });
+    /* Reveal on scroll */
+    var revealEls = Array.prototype.slice.call(document.querySelectorAll('[data-reveal]'));
+    if (!hasIO || reduce) { revealEls.forEach(function (el) { el.classList.add('in'); }); }
+    else {
+      var ro = new IntersectionObserver(function (entries) {
+        entries.forEach(function (e) { if (e.isIntersecting) { e.target.classList.add('in'); ro.unobserve(e.target); } });
+      }, { rootMargin: '0px 0px -8% 0px', threshold: 0.08 });
+      revealEls.forEach(function (el) { ro.observe(el); });
     }
+
+    /* Caustic light on the surface */
+    var cv = document.getElementById('caustics');
+    if (cv && cv.getContext) {
+      var ctx = cv.getContext('2d');
+      var W = 96, H = 54, buf = document.createElement('canvas');
+      buf.width = W; buf.height = H;
+      var bctx = buf.getContext('2d'), img = bctx.createImageData(W, H), heroVisible = true, last = 0;
+      function size() { var r = cv.getBoundingClientRect(); cv.width = Math.max(1, Math.round(r.width / 2)); cv.height = Math.max(1, Math.round(r.height / 2)); }
+      function frame(t) {
+        var time = t * 0.00022 + 23, d = img.data, i = 0;
+        for (var y = 0; y < H; y++) {
+          for (var x = 0; x < W; x++) {
+            var px = (x / W) * 6.2832 * 1.4 - 250, py = (y / H) * 6.2832 * 0.8 - 250, ix = px, iy = py, c = 1;
+            for (var n = 0; n < 4; n++) {
+              var tt = time * (1 - 3.5 / (n + 1));
+              var nx = px + Math.cos(tt - ix) + Math.sin(tt + iy);
+              var ny = py + Math.sin(tt - iy) + Math.cos(tt + ix);
+              ix = nx; iy = ny;
+              c += 1 / Math.sqrt(Math.pow(px / (Math.sin(ix + tt) / 0.005), 2) + Math.pow(py / (Math.cos(iy + tt) / 0.005), 2));
+            }
+            c /= 4; c = 1.17 - Math.pow(c, 1.4);
+            var v = Math.min(1, Math.pow(Math.abs(c), 8));
+            d[i++] = 255; d[i++] = 255; d[i++] = 255; d[i++] = Math.round(v * 255);
+          }
+        }
+        bctx.putImageData(img, 0, 0);
+        ctx.clearRect(0, 0, cv.width, cv.height);
+        ctx.imageSmoothingEnabled = true;
+        ctx.drawImage(buf, 0, 0, cv.width, cv.height);
+      }
+      function loop(t) {
+        if (heroVisible && t - last > 40) { frame(t); last = t; }
+        requestAnimationFrame(loop);
+      }
+      size(); window.addEventListener('resize', size);
+      if (reduce) { frame(9000); }
+      else {
+        if (hasIO) new IntersectionObserver(function (e) { heroVisible = e[0].isIntersecting; }).observe(cv);
+        requestAnimationFrame(loop);
+      }
+    }
+
+    /* Analytics agent walkthrough: click through, no autoplay */
+    var agent = document.getElementById('agent');
+    if (agent) {
+      var stepBtns = Array.prototype.slice.call(agent.querySelectorAll('.steps button'));
+      var panes = Array.prototype.slice.call(agent.querySelectorAll('.pane'));
+      var opts = Array.prototype.slice.call(agent.querySelectorAll('.opt'));
+      var prev = document.getElementById('agent-prev'), next = document.getElementById('agent-next');
+      var nextLabel = document.getElementById('agent-next-label'), count = document.getElementById('agent-count');
+      var names = stepBtns.map(function (b) { return b.textContent.replace(/^\d+/, '').trim(); });
+      var cur = 0, picked = null, advanceTimer = null;
+      function choose(kind) {
+        picked = kind;
+        opts.forEach(function (o) { o.setAttribute('aria-pressed', String(o.getAttribute('data-opt') === kind)); });
+        var work = kind !== 'position';
+        document.getElementById('plan-field').textContent = work ? '"work_location.region"' : '"position_location.region"';
+        document.getElementById('plan-note').textContent = work ? '"Europe = where people work"' : '"Europe = where positions are based"';
+        document.getElementById('dax-col').textContent = work ? "'Work Location'[Region]" : "'Position Location'[Region]";
+      }
+      function show(i) {
+        clearTimeout(advanceTimer);
+        if (i > 2 && !picked) choose('work');
+        cur = Math.max(0, Math.min(panes.length - 1, i));
+        stepBtns.forEach(function (b, j) {
+          if (j === cur) b.setAttribute('aria-current', 'step'); else b.removeAttribute('aria-current');
+          b.classList.toggle('done', j < cur);
+        });
+        panes.forEach(function (p, j) { p.classList.toggle('on', j === cur); });
+        prev.disabled = cur === 0;
+        count.textContent = 'Step ' + (cur + 1) + ' of ' + panes.length;
+        nextLabel.textContent = cur === panes.length - 1 ? 'Start over' : 'Next: ' + names[cur + 1];
+        var list = agent.querySelector('.steps');
+        if (list.scrollWidth > list.clientWidth + 2) {
+          var br = stepBtns[cur].getBoundingClientRect(), lr = list.getBoundingClientRect();
+          list.scrollBy({ left: br.left - lr.left - 16, behavior: reduce ? 'auto' : 'smooth' });
+        }
+      }
+      function reset() { picked = null; opts.forEach(function (o) { o.setAttribute('aria-pressed', 'false'); }); show(0); }
+      stepBtns.forEach(function (b, j) { b.addEventListener('click', function () { show(j); }); });
+      opts.forEach(function (o) {
+        o.addEventListener('click', function () {
+          choose(o.getAttribute('data-opt'));
+          clearTimeout(advanceTimer);
+          advanceTimer = setTimeout(function () { if (cur === 2) show(3); }, reduce ? 0 : 650);
+        });
+      });
+      prev.addEventListener('click', function () { show(cur - 1); });
+      next.addEventListener('click', function () { if (cur === panes.length - 1) reset(); else show(cur + 1); });
+      document.getElementById('agent-reset').addEventListener('click', reset);
+      agent.addEventListener('keydown', function (e) {
+        if (e.target.closest && e.target.closest('.opt')) return;
+        if (e.key === 'ArrowRight') { e.preventDefault(); if (cur < panes.length - 1) show(cur + 1); }
+        if (e.key === 'ArrowLeft') { e.preventDefault(); show(cur - 1); }
+      });
+      reset();
+    }
+
+    /* Rates vs averages */
+    var modes = Array.prototype.slice.call(document.querySelectorAll('.toggle button'));
+    var data = {
+      rate: { v1: '48%', v2: '6%', w1: 48, w2: 6, read: 'Exercise days beat your usual day 48% of the time, against 6% for days without.' },
+      avg: { v1: '6.3', v2: '4.2', w1: 63, w2: 42, read: 'Your mood averaged 6.3 on exercise days and 4.2 on the others. True, but hard to act on.' }
+    };
+    modes.forEach(function (b) {
+      b.addEventListener('click', function () {
+        var m = data[b.getAttribute('data-mode')];
+        modes.forEach(function (x) { x.setAttribute('aria-pressed', String(x === b)); });
+        document.getElementById('v1').textContent = m.v1; document.getElementById('v2').textContent = m.v2;
+        document.getElementById('b1').style.width = m.w1 + '%'; document.getElementById('b2').style.width = m.w2 + '%';
+        document.getElementById('read').textContent = m.read;
+      });
+    });
+
+    /* Fins of Fate screenshots */
+    var screen = document.getElementById('screen');
+    if (screen) {
+      var shots = Array.prototype.slice.call(screen.querySelectorAll('img'));
+      var thumbs = document.getElementById('thumbs'), capText = document.getElementById('cap-text'), capCount = document.getElementById('cap-count');
+      var caps = ['Three-player co-op in the Open Ocean', 'The Koi Emperor, boss of the Pond, in its second phase', 'Chain lightning in the Midnight Zone', 'Drafting a power card mid-run', 'A 3v3 versus match', 'The electric eel reaches Legendary', 'Your fish tank, grown into a grand reef', 'The world map for the Flooded Cavern'];
+      var idx = 0, auto = !reduce, showTimer = null, toggle = document.getElementById('show-toggle');
+      var pauseIcon = toggle.innerHTML, playIcon = '<svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M8 5.5v13l10.5-6.5L8 5.5Z"/></svg>';
+      shots.forEach(function (s, i) {
+        var b = document.createElement('button'); b.type = 'button';
+        b.setAttribute('aria-label', caps[i]);
+        var t = document.createElement('img'); t.src = s.getAttribute('src').replace('.webp', '-thumb.webp'); t.alt = ''; t.loading = 'lazy'; t.width = 320; t.height = 180;
+        b.appendChild(t); b.addEventListener('click', function () { go(i); setAuto(false); });
+        thumbs.appendChild(b);
+      });
+      var tbtns = Array.prototype.slice.call(thumbs.querySelectorAll('button'));
+      function go(i) {
+        idx = (i + shots.length) % shots.length;
+        shots.forEach(function (s, j) { s.classList.toggle('on', j === idx); if (j === idx) s.loading = 'eager'; });
+        tbtns.forEach(function (b, j) { if (j === idx) b.setAttribute('aria-current', 'true'); else b.removeAttribute('aria-current'); });
+        capText.textContent = caps[idx]; capCount.textContent = (idx + 1) + ' / ' + shots.length;
+      }
+      function setAuto(on) {
+        auto = on; clearInterval(showTimer);
+        toggle.innerHTML = on ? pauseIcon : playIcon;
+        toggle.setAttribute('aria-label', on ? 'Pause slideshow' : 'Play slideshow');
+        if (on) showTimer = setInterval(function () { go(idx + 1); }, 4500);
+      }
+      toggle.addEventListener('click', function () { setAuto(!auto); });
+      go(0); setAuto(auto);
+    }
+
+    /* Depth gauge */
+    var gauge = document.querySelector('.gauge');
+    if (gauge) {
+      var links = Array.prototype.slice.call(gauge.querySelectorAll('a'));
+      var marker = gauge.querySelector('.marker'), num = document.getElementById('depth-num'), zname = document.getElementById('zone-name');
+      var targets = links.map(function (a) { return document.querySelector(a.getAttribute('href')); });
+      var depths = links.map(function (a) { return +a.getAttribute('data-depth'); });
+      var shown = -1, list = gauge.querySelector('ol');
+      marker.style.top = list.offsetTop + 'px';
+      function update() {
+        var line = window.innerHeight * 0.4, best = 0;
+        targets.forEach(function (t, i) { if (t && t.getBoundingClientRect().top <= line) best = i; });
+        var atEnd = window.innerHeight + window.scrollY >= document.documentElement.scrollHeight - 2;
+        if (atEnd) best = targets.length - 1;
+        var depth = depths[best];
+        if (!atEnd && best < targets.length - 1 && targets[best + 1]) {
+          var a = targets[best].getBoundingClientRect().top, b = targets[best + 1].getBoundingClientRect().top;
+          var f = Math.min(1, Math.max(0, (line - a) / Math.max(1, b - a)));
+          depth = depths[best] + f * (depths[best + 1] - depths[best]);
+        }
+        num.textContent = Math.round(depth).toLocaleString('en-US');
+        if (best !== shown) {
+          shown = best;
+          links.forEach(function (a, j) { if (j === best) a.setAttribute('aria-current', 'true'); else a.removeAttribute('aria-current'); });
+          var el = links[best];
+          marker.style.transform = 'translateY(' + (el.offsetTop + el.offsetHeight / 2) + 'px)';
+          zname.textContent = links[best].getAttribute('data-zone');
+          gauge.classList.toggle('dark', best >= 2);
+        }
+      }
+      var ticking = false;
+      window.addEventListener('scroll', function () { if (!ticking) { ticking = true; requestAnimationFrame(function () { update(); ticking = false; }); } }, { passive: true });
+      window.addEventListener('resize', function () { shown = -1; update(); });
+      update();
+    }
+  })();
   </script>
 </body>
+</html>
